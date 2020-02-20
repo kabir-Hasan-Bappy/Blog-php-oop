@@ -1,26 +1,39 @@
 <?php include 'inc/header.php'; ?>
+<?php
+if (!isset($_GET['id']) || $_GET['id']== NULL) {
+	header("Location: 404.php");
+}else{
+	$id = $_GET['id'];
+}
+?>
 
 	<div class="contentsection contemplete clear">
 		<div class="maincontent clear">
 			<div class="about">
-				<h2>Our post title here</h2>
-				<h4>April 10, 2016, 12:30 PM, By Delowar</h4>
-				<img src="images/post2.png" alt="MyImage"/>
-				<p>Our psot..Some text will be go here. Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here. Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.</p>
-				
-				<p>About me..Some text will be go here. Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here. Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.</p>
+				<?php
+				$query = "SELECT *FROM post WHERE id = $id ";
+				$post = $db->select($query);
+				if ($post) { 
+			while ( $result = $post->fetch_assoc()) { ?>
 
-				<p>About me..Some text will be go here. Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here. Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.Some text will be go here.</p>
+				<h2><?php echo $result['title'];?></h2>
+				<h4><?php echo $fm->formatDate($result['date']);?> , By <strong><?php echo $result['author'];?></strong></h4>
+				<img src="admin/<?php echo $result['image'];?>" alt="MyImage"/>
+				<p><?php echo $result['body'];?></p>
 				
-				<div class="relatedpost clear">
+					<div class="relatedpost clear">
 					<h2>Related articles</h2>
-					<a href="#"><img src="images/post1.jpg" alt="post image"/></a>
-					<a href="#"><img src="images/post1.jpg" alt="post image"/></a>
-					<a href="#"><img src="images/post1.jpg" alt="post image"/></a>
-					<a href="#"><img src="images/post1.jpg" alt="post image"/></a>
-					<a href="#"><img src="images/post1.jpg" alt="post image"/></a>
-					<a href="#"><img src="images/post1.jpg" alt="post image"/></a>
+					<?php
+					$cat_id = $result['cat'];
+					$queryrelated = "SELECT * FROM post WHERE cat = '$cat_id' LIMIT 6";
+				    $relatedpost = $db->select($queryrelated);
+				if ($relatedpost) { 
+						while ( $result = $relatedpost->fetch_assoc()) { ?>
+					
+					<a href="post.php?id=<?php echo $result['id'];?>"><img src="admin/<?php echo $result['image'];?>" alt="post image"/></a>
+				<?php } } else{ echo "NO Related post found!!";}?>
 				</div>
+				<?php } } else{ header("Location: 404.php");} ?>
 	</div>
 
 		</div>

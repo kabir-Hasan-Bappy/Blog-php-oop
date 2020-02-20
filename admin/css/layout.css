@@ -1158,3 +1158,12 @@ td.details {
 }
 
 .gallery-sand .sorting{background-color:white !important;}
+
+.successmsg{
+color: green; 
+font-size: 20px;
+}
+.failmsg{
+  color:red;
+  font-size:20px;
+}

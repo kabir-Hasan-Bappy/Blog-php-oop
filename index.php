@@ -1,19 +1,24 @@
 <?php include 'inc/header.php';
 include 'inc/slider.php';
-include 'config/config.php'; 
-include 'lib/Database.php'; 
-include 'helpers/Format.php'; 
 ?>
-<?php 
-$db = new Database();
-$fm = new Format();?>
-
 
 <div class="contentsection contemplete clear">
-
 	<div class="maincontent clear">
+		<!-- pagination-->
+<?php
+		$per_page = 3;
+		if (isset($_GET['page'])) {
+			$page = $_GET['page'];
+		}else{
+			$page = 1;
+		}
+
+		$start_page = ($page-1) * $per_page;
+
+?>
+		<!-- pagination-->
 		<?php
-		$query = 'SELECT * FROM post LIMIT 3';
+		$query = "SELECT * FROM post LIMIT $start_page, $per_page";
 		$post = $db->select($query);
 		if ($post) { 
 			while ( $result = $post->fetch_assoc()) { ?>
@@ -21,7 +26,7 @@ $fm = new Format();?>
 				<div class="samepost clear">
 					<h2><a href="post.php?id=<?php echo $result['id']; ?>"><?php echo $result['title']; ?></a></h2>
 					<h4><?php echo $fm->formatDate($result['date']); ?>, By <a href="#"><?php echo $result['author']; ?></a></h4>
-					<a href="#"><img src="images/<?php echo $result['image'];?>" alt="post image"/></a>
+					<a href="#"><img src="admin/<?php echo $result['image'];?>" alt="post image"/></a>
 					<p>
 						<?php echo $fm->textShorten($result['body']); ?>
 					</p>
@@ -29,9 +34,24 @@ $fm = new Format();?>
 						<a href="post.php?id=<?php echo $result['id']; ?>">Read More</a>
 					</div>
 				</div>
-				<?php } } else{
-		header("Location: 404.php");
-	}?> <!-- end while loop-->
+				<?php } } else{ header("Location: 404.php");}?> 
+	<!-- end while loop-->
+
+	<!-- pagination-->
+
+	<?php
+	$query = 'SELECT * FROM post';
+	$result = $db->select($query);
+	$total_rows = mysqli_num_rows($result);
+	$total_pages = ceil($total_rows/$per_page);
+
+	 echo "<span class='pagination'><a href='index.php?page=1'>".'First Page'."</a>" ;
+	 for ($i=1; $i<=$total_pages; $i++) { 
+	 	echo "<a href='index.php?page=".$i."'>".$i."</a>";
+	 };
+
+	 echo "<a href='index.php?page=$total_pages'>".'Last Page'."</a></span>" ?>
+	<!-- pagination-->
 			</div>
 			<?php include 'inc/sidebar.php';?>
 		</div>

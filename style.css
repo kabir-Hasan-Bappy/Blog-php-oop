@@ -35,6 +35,7 @@ textarea {
   background: #ca932f none repeat scroll 0 0;
   color: #fff;
 }
+
 .logo {
   float: left;
   width: 580px;
@@ -397,9 +398,25 @@ margin:200px 0;
 }
 .items:hover .shadow{top:0}
 
+.pagination{
+  display: block;
+  font-size: 20px;
+  margin-top: 10px;
+  padding: 10px;
+  text-align: left;
+}
+.pagination a{
+  background: #e6af4b none repeat scroll 0 0;
+  border: 1px solid #a7700c;
+  border-radius: 3px;
+  color: #333;
+  margin-left: 2px;
+  padding: 2px 10px;
+  text-decoration: none;
+}
 
+.pagination a:hover{
+  background: #be8723 none repeat scroll 0 0;
+  color: #fff;
 
-
-
-
-
+}
