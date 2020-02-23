@@ -1,15 +1,14 @@
 <?php include 'inc/a_header.php'; ?>
 <?php include 'inc/a_sidebar.php'; ?>
 <?php 
-if (!Session::get('userRole') == '0') {
+ if (!Session::get('userRole') == '0') {
   echo "<script>window.location = 'index.php'</script>";
 }
-
 ?>
 <div class="grid_10">
 
   <div class="box round first grid">
-    <h2>Add New uSER</h2>
+    <h2>Add New User</h2>
     <div class="block copyblock">
      <?php
      if ($_SERVER['REQUEST_METHOD'] == 'POST') {

@@ -34,8 +34,8 @@ $fm = new Format();
         		}
         		$text = substr($email, 0, 3);
         		$rand = rand(10000, 99999);
-        		$newpass = '$text$rand';
-        		$password = md5($newpass);
+        		$newpass = '$text'.'$rand';
+        		$password = $newpass;
 
         		$query = "UPDATE 
         				  users
@@ -43,13 +43,14 @@ $fm = new Format();
         		          password = '$password' 
         		          WHERE id= '$userid'";
                 $updatepass = $db->update($query);
-                $to = "$email";
-                $from = "kabir.softwindtech@gmail.com";
-                $headers = "$from\n";
+
+                $to       = "$email";
+                $from     = "kabirhasan2002@gmail.com";
+                $headers  = "$from"."\n";
                 $headers .= "MIME-Version: 1.0" . "\r\n" ;
                 $headers .= "Content-type: text/html; charset=UTF-8" . "\r\n";
-                $subject = "Your Password";
-                $message = "Your Username is '.$username.' and Password is '.$newpass.'";
+                $subject  = "Your Password";
+                $message  = "Your Username is '.$username.' and Password is '.$newpass.'";
                 $sendMail = mail($to, $subject, $message, $headers);
 
                 if ($sendMail) {
