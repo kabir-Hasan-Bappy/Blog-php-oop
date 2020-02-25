@@ -16,10 +16,51 @@ $userrole = Session::get('userRole');
      $email = mysqli_real_escape_string($db->link, $_POST['email']);
      $details = mysqli_real_escape_string($db->link, $_POST['details']);
 
+     $permited  = array('jpg', 'jpeg', 'png', 'gif');
+     $file_name = $_FILES['image']['name'];
+     $file_size = $_FILES['image']['size'];
+     $file_temp = $_FILES['image']['tmp_name'];
+
+     $div = explode('.', $file_name);
+     $file_ext = strtolower(end($div));
+     $unique_image = substr(md5(time()), 0, 10).'.'.$file_ext;
+     $uploaded_image = "upload/img/".$unique_image;
+
+
      if (empty($name) || empty($username) || empty($email) || empty($details)) {
         echo "<span class='failmsg'>Field must not be empty!</span>";
     }
     else{
+
+        if (!empty($file_name)) {
+
+           if ($file_size >1048567) {
+               echo "<span class='error'>Image Size should be less then 1MB!
+               </span>";
+           } elseif (in_array($file_ext, $permited) === false) {
+               echo "<span class='error'>You can upload only:-"
+               .implode(', ', $permited)."</span>";
+           } else{
+
+            move_uploaded_file($file_temp, $uploaded_image);
+
+            $query = "UPDATE users
+            SET 
+            name = '$name',
+            username = '$username',
+            email = '$email',
+            details = '$details',
+            profile_image = '$uploaded_image'
+            WHERE id = '$userid' "; 
+
+            $updateuser = $db->update($query);
+            if ($updateuser) {
+                echo "<span class='successmsg'>User data Updated Successfully!</span>";
+            }else{
+                echo "<span class='failmsg'>User data Not Updated!</span>";
+            }
+            }
+            }else{
             $query = "UPDATE users
             SET 
             name = '$name',
@@ -33,6 +74,7 @@ $userrole = Session::get('userRole');
                 echo "<span class='successmsg'>User data Updated Successfully!</span>";
             }else{
                 echo "<span class='failmsg'>User data Not Updated!</span>";
+            }
             }    
 
         }
@@ -83,6 +125,15 @@ $userrole = Session::get('userRole');
                 </td>
                 <td>
                     <textarea value="" name="details" class="tinymce"><?php echo $result['details'];?></textarea>
+                </td>
+            </tr>
+             <tr>
+                <td>
+                    <label>Upload Image</label>
+                </td>
+                <td>
+                    <img src="<?php echo $result['profile_image'];?>" alt="" height="200px" width="200px"><br>
+                    <input type="file" name="image" />
                 </td>
             </tr>
             <tr>

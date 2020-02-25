@@ -37,6 +37,7 @@ $fm = new Format();
 					Session::set("name", $value['name']);
 					Session::set("userId", $value['id']);
 					Session::set("userRole", $value['role']);
+					Session::set("profileImage", $value['profile_image']);
 					header("Location:index.php");
 				
 			}else{

@@ -14,7 +14,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
+        <?php
         $query = "SELECT * FROM slider";
         $slider = $db->select($query);
         if ($slider) { 

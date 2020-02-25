@@ -1,6 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700);
 *{margin:0;padding:0;outline:0}
-body{font-family: 'Source Sans Pro', sans-serif;font-size:14px;line-height:18px;color:#000;background:url(images/bg.png)repeat fixed 0 0 #fff;}
+body{font-family: 'Source Sans Pro', sans-serif;font-size:14px;line-height:18px;color:#000;background:url(images/social/bg2.jpg)repeat fixed 0 0 #fff;}
 
 .templete{width:960px;margin:0 auto;}
 .contemplete {
@@ -29,7 +29,7 @@ textarea {
   margin-bottom: 10px;
   padding: 5px;
   width: 300px;
-   border: 1px solid #cfc5b6;
+  border: 1px solid #cfc5b6;
 }
 .headersection {
   background: #ca932f none repeat scroll 0 0;
@@ -154,11 +154,11 @@ textarea {
 
 
 .item{
-position:relative;
-margin:200px 0;
- width:300px;
- height:200px;
- overflow:hidden;
+  position:relative;
+  margin:200px 0;
+  width:300px;
+  height:200px;
+  overflow:hidden;
 }
 .item img {
  width:300px;

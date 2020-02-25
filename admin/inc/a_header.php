@@ -57,16 +57,22 @@ $fm = new Format();
     <div class="container_12">
         <div class="grid_12 header-repeat">
             <div id="branding">
+                <?php 
+                $query = "SELECT * FROM title_slogan WHERE id = '1' ";
+                $selectLogo = $db->select($query);
+                if ($selectLogo) {
+                    while ( $result = $selectLogo->fetch_assoc()) {?>
                 <div class="floatleft logo">
-                    <img src="img/livelogo.png" alt="Logo" />
+                    <img src="<?php echo $result['logo']; ?>" alt="Logo"/>
 				</div>
 				<div class="floatleft middle">
-					<h1>My Food Blog</h1>
-					<p>Admin</p>
+					<h1><?php echo $result['title']; ?></h1>
+					<p>Admin Panel</p>
+                    <?php } } ?>
 				</div>
                 <div class="floatright">
                     <div class="floatleft">
-                        <img src="img/img-profile.jpg" alt="Profile Pic" /></div>
+                     <img style="height:40px; width:40px;border-radius:50%;" src="<?php echo Session::get('profileImage');?>" alt="Profile Pic" /></div>
                         <?php
                         if (isset($_GET['action']) && $_GET['action'] == 'logout') {
                             Session::destroy();
@@ -74,7 +80,7 @@ $fm = new Format();
                         ?>
                     <div class="floatleft marginleft10">
                         <ul class="inline-ul floatleft">
-                            <li>Hello <?php echo Session::get('name');?></li>
+                            <li>Hello <?php echo Session::get('username');?></li>
                             <li><a href="?action=logout">Logout</a></li>
                         </ul>
                     </div>
